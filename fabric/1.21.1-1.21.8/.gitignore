@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# 运行与日志
+run/
+logs/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# 发布产物（请用 GitHub Releases 发布 jar）
+releases/
+
+# 本机工具环境
+.reasonix/
+reasonix.toml
+
+# 系统
+.DS_Store
+Thumbs.db

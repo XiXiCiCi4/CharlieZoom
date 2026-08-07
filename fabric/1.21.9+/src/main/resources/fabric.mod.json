@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "charlie_zoom",
+  "version": "${version}",
+  "name": "Charlie Zoom",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/charlie_zoom/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "org.example1.charlie_zoom.client.Charlie_zoomDataGenerator"
+    ],
+    "client": [
+      "org.example1.charlie_zoom.client.Charlie_zoomClient"
+    ],
+    "main": [
+      "org.example1.charlie_zoom.Charlie_zoom"
+    ]
+  },
+  "mixins": [
+    "charlie_zoom.mixins.json",
+    {
+      "config": "charlie_zoom.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": ">=${minecraft_version} <1.22"
+  }
+}
