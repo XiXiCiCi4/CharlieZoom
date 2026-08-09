@@ -3,11 +3,11 @@ package org.example1.charlie_zoom;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,8 +15,13 @@ import org.example1.charlie_zoom.client.ZoomState;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * Charlie Zoom锛團orge 1.20.1~1.20.4 / 1.20.6锛? *
- * 鍔熻兘锛? * - 鎸変綇 C 閿紙鍙湪鎸夐敭缁戝畾涓慨鏀癸級鏀惧ぇ瑙嗛噹锛孎OV 骞虫粦杩囨浮鍒扮洰鏍囧€硷紙绾?0.1~0.2s锛? * - 鏀惧ぇ鏃舵粴鍔ㄦ粴杞皟鏁寸缉鏀惧€嶆暟锛堢洰鏍囪閲?卤10掳锛岃寖鍥?10掳~170掳锛? * - 鏀惧ぇ鏈熼棿榧犳爣鐏垫晱搴︽寜 鍘烣OV/褰撳墠FOV 姣斾緥鍚屾闄嶄綆锛堢敱 MouseHandlerMixin 瀹炵幇锛? */
+ * Charlie Zoom（NeoForge 1.20.1）
+ *
+ * 功能：
+ * - 按住 C 键（可在按键绑定中修改）放大视野，FOV 平滑过渡到目标值（约 0.1~0.2s）
+ * - 放大时滚动滚轮调整缩放倍数（目标视野 ±10°，范围 10°~170°）
+ * - 放大期间鼠标灵敏度按 原FOV/当前FOV 比例同步降低（由 MouseHandlerMixin 实现）
+ */
 @Mod(CharlieZoom.MOD_ID)
 public class CharlieZoom {
 
@@ -30,8 +35,9 @@ public class CharlieZoom {
     );
 
     public CharlieZoom() {
-        // MOD 浜嬩欢鎬荤嚎锛氭敞鍐屾寜閿粦瀹?        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegisterKeyMappings);
-        // 涓讳簨浠舵€荤嚎锛歵ick / 婊氳疆 / FOV
+        // MOD 事件总线：注册按键绑定
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegisterKeyMappings);
+        // 主事件总线：tick / 滚轮 / FOV
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -66,5 +72,3 @@ public class CharlieZoom {
         }
     }
 }
-
-
